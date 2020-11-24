@@ -1,4 +1,6 @@
 resource "aws_lb_target_group" "application" {
+  count = var.create_alb
+
   name                          = replace(local.name, "/(.{0,31})(.*)/", "$1")
   port                          = var.port
   protocol                      = "HTTP"
@@ -20,13 +22,15 @@ resource "aws_lb_target_group" "application" {
 }
 
 data "aws_lb_listener" "selected443" {
-  load_balancer_arn = var.alb_arn
+  load_balancer_arn = var.create_alb ? var.alb_arn : null
   port              = 443
 }
 
 resource "aws_lb_listener_rule" "admin" {
+  count = var.create_alb
+
   listener_arn = data.aws_lb_listener.selected443.arn
-  priority     = var.priority
+  priority     = var.create_alb ? var.alb_priority : null
 
   action {
     type             = "forward"
@@ -35,7 +39,7 @@ resource "aws_lb_listener_rule" "admin" {
 
   condition {
     host_header {
-      values = [var.url]
+      values = var.create_alb ? [var.alb_url] : null
     }
   }
 

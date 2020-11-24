@@ -14,8 +14,9 @@ variable "name" {
   description = "name of this specific service"
 }
 
-variable "url" {
+variable "alb_url" {
   description = "url for the alb listener"
+  default     = null
 }
 
 variable "vpc_id" {
@@ -24,6 +25,7 @@ variable "vpc_id" {
 
 variable "alb_arn" {
   description = "application load balancer under which target group and services will be registered"
+  default     = null
 }
 
 variable "private_subnet_ids" {
@@ -66,8 +68,9 @@ variable "cluster_name" {
   description = "ecs cluster name where the services will be registered"
 }
 
-variable "priority" {
+variable "alb_priority" {
   description = "listener rule priority - must be unique to each ecs-app (module)"
+  default     = null
 }
 
 variable "image" {
@@ -163,4 +166,10 @@ variable "placement_constraint_type" {
 
 variable "placement_constraint_expression" {
   default = "agentConnected==true"
+}
+
+variable "create_alb" {
+  default     = true
+  description = "Enable creation of ALB resources (default enabled)"
+  type        = bool
 }

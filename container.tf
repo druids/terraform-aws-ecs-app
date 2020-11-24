@@ -1,6 +1,6 @@
 module "container_definition" {
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "v0.17.0"
+  version = "v0.45.2"
 
   container_name  = var.name
   container_image = var.image == "" ? aws_ecr_repository.application.repository_url : var.image
@@ -17,13 +17,21 @@ module "container_definition" {
     },
   ]
 
-  log_options = [
+  log_configuration = [
     {
       "awslogs-region"        = data.aws_region.current.name
       "awslogs-group"         = aws_cloudwatch_log_group.application_logs.name
       "awslogs-stream-prefix" = "ecs"
     },
   ]
+
+  healthcheck = var.create_alb ? null : { // only use healthcheck on container if not using ALB
+    command     = [var.container_healthcheck_command]
+    interval    = var.container_healthcheck_interval
+    retries     = var.container_healthcheck_retries
+    startPeriod = var.container_healthcheck_startPeriod
+    timeout     = var.container_healthcheck_timeout
+  }
 
   environment = [var.environment]
   secrets     = [var.secrets]

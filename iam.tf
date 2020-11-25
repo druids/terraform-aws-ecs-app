@@ -1,5 +1,5 @@
 // task execution role
-data "aws_iam_policy" "ecs_task_execution" {
+data "aws_iam_policy_document" "ecs_task_execution" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -12,12 +12,12 @@ data "aws_iam_policy" "ecs_task_execution" {
 
 resource "aws_iam_role" "ecs_task_execution" {
   name               = "${local.name_underscore}_ecs_task_execution_role"
-  assume_role_policy = data.aws_iam_policy.ecs_task_execution.json
+  assume_role_policy = data.aws_iam_policy_document.ecs_task_execution.json
   tags               = local.tags
 }
 
 // ecr access (if ecr is created)
-data "aws_iam_policy" "ecr_access" {
+data "aws_iam_policy_document" "ecr_access" {
   statement {
     effect = "Allow"
     actions = [
@@ -36,7 +36,7 @@ resource "aws_iam_policy" "ecr_access" {
   name        = "${local.name}-ecr"
   path        = "/"
   description = "Policy for service ${local.name}-${var.name}"
-  policy      = data.aws_iam_policy.ecr_access.json
+  policy      = data.aws_iam_policy_document.ecr_access.json
 }
 
 resource "aws_iam_role_policy_attachment" "ecr_repository" {
@@ -47,7 +47,7 @@ resource "aws_iam_role_policy_attachment" "ecr_repository" {
 }
 
 // cloudwatch logs access
-data "aws_iam_policy" "logs_policy" {
+data "aws_iam_policy_document" "logs_policy" {
   statement {
     effect = "Allow"
     actions = [
@@ -64,7 +64,7 @@ resource "aws_iam_policy" "logs_policy" {
   name        = "${local.name}-logs"
   path        = "/"
   description = "Policy for service ${local.name}-${var.name}"
-  policy      = data.aws_iam_policy.logs_policy.json
+  policy      = data.aws_iam_policy_document.logs_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "application_logs" {

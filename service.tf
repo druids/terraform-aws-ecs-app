@@ -15,17 +15,21 @@ resource "aws_ecs_service" "application" {
   health_check_grace_period_seconds  = var.healthcheck_grace
   scheduling_strategy                = var.scheduling_strategy
 
-  load_balancer {
-    container_name   = var.name
-    container_port   = var.port
-    target_group_arn = aws_lb_target_group.application.arn
+  dynamic "load_balancer" {
+    for_each = var.create_alb_resources ? [1] : []
+
+    content {
+      container_name   = var.name
+      container_port   = var.port
+      target_group_arn = aws_lb_target_group.application[0].arn
+    }
   }
 
   lifecycle {
     ignore_changes = [desired_count]
   }
 
-  placement_constraints = {
+  placement_constraints {
     type       = var.placement_constraint_type
     expression = var.placement_constraint_expression
   }

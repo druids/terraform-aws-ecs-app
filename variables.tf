@@ -168,8 +168,33 @@ variable "placement_constraint_expression" {
   default = "agentConnected==true"
 }
 
-variable "create_alb" {
+variable "create_alb_resources" {
   default     = true
   description = "Enable creation of ALB resources (default enabled)"
   type        = bool
+}
+
+variable "container_healthcheck_command" {
+  default = ["CMD-SHELL", "echo"]
+  type    = list
+}
+
+variable "container_healthcheck_retries" {
+  default = 5
+  type    = number
+}
+
+variable "container_healthcheck_start_period" {
+  default = 60
+  type    = number
+}
+
+variable "container_healthcheck_interval" {
+  default = 30
+  type    = number
+}
+
+variable "container_healthcheck_timeout" {
+  default = 5
+  type    = number
 }

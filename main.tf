@@ -18,5 +18,7 @@ data "aws_ecs_cluster" "ecs" {
 }
 
 data "aws_lb" "alb" {
+  count = var.create_alb_resources ? 1 : 0
+
   arn = var.alb_arn
 }

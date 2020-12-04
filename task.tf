@@ -7,7 +7,7 @@ resource "aws_ecs_task_definition" "application" {
   network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
 
-  container_definitions = module.container_definition.json
+  container_definitions = var.create_alb_resources ? module.container_definition_alb[0].json_map_encoded : module.container_definition_noalb[0].json_map_encoded
 
   tags = local.tags
 }

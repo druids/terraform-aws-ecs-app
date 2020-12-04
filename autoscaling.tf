@@ -20,13 +20,13 @@ resource "aws_cloudwatch_metric_alarm" "service_cpu_high" {
   statistic           = "Average"
   threshold           = var.scale_up
 
-  dimensions {
+  dimensions = {
     ClusterName = var.cluster_name
     ServiceName = var.name
   }
 
-  alarm_actions = [aws_appautoscaling_policy.up.arn]
-  depends_on    = [aws_appautoscaling_policy.up]
+  alarm_actions = [aws_appautoscaling_policy.up[0].arn]
+  depends_on    = [aws_appautoscaling_policy.up[0]]
 }
 
 resource "aws_cloudwatch_metric_alarm" "service_cpu_low" {
@@ -40,13 +40,13 @@ resource "aws_cloudwatch_metric_alarm" "service_cpu_low" {
   statistic           = "Average"
   threshold           = var.scale_down
 
-  dimensions {
+  dimensions = {
     ClusterName = var.cluster_name
     ServiceName = var.name
   }
 
-  alarm_actions = [aws_appautoscaling_policy.down.arn]
-  depends_on    = [aws_appautoscaling_policy.down]
+  alarm_actions = [aws_appautoscaling_policy.down[0].arn]
+  depends_on    = [aws_appautoscaling_policy.down[0]]
 }
 
 resource "aws_appautoscaling_policy" "up" {

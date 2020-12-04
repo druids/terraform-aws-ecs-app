@@ -43,7 +43,7 @@ resource "aws_iam_role_policy_attachment" "ecr_repository" {
   count = var.image == "" ? 1 : 0
 
   role       = aws_iam_role.ecs_task_execution.id
-  policy_arn = aws_iam_policy.ecr_access.arn
+  policy_arn = aws_iam_policy.ecr_access[0].arn
 }
 
 // cloudwatch logs access
@@ -86,5 +86,5 @@ resource "aws_iam_role_policy_attachment" "service_policy" {
   count = var.policy == "" ? 0 : 1
 
   role       = aws_iam_role.ecs_task_execution.id
-  policy_arn = aws_iam_policy.service_policy.arn
+  policy_arn = aws_iam_policy.service_policy[0].arn
 }

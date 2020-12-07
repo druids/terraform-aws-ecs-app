@@ -198,3 +198,46 @@ variable "container_healthcheck_timeout" {
   default = 5
   type    = number
 }
+
+variable "create_nginx" {
+  default     = true
+  description = "Enable creation if Nginx proxy ALB → Nginx → App (default true, requires ALB)"
+  type        = bool
+}
+
+variable "nginx_container_name" {
+  default     = "nginx_proxy"
+  description = "Container name for Nginx proxy"
+  type        = string
+}
+
+variable "nginx_container_image" {
+  default     = "nginx:latest"
+  description = "Container image to be used for Nginx task"
+  type        = string
+}
+
+variable "nginx_container_cpu" {
+  default = 64
+  type    = number
+}
+
+variable "nginx_container_memory_reservation" {
+  default = 64
+  type    = number
+}
+
+variable "nginx_container_memory" {
+  default = 0
+  type    = number
+}
+
+variable "nginx_links" {
+  default = null
+  type    = list
+}
+
+variable "nginx_volume_name" {
+  default = "nginx_config"
+  type    = string
+}

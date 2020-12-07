@@ -19,7 +19,7 @@ resource "aws_ecs_service" "application" {
     for_each = var.create_alb_resources ? [1] : []
 
     content {
-      container_name   = var.name
+      container_name   = var.create_nginx ? var.nginx_container_name : var.name
       container_port   = var.port
       target_group_arn = aws_lb_target_group.application[0].arn
     }

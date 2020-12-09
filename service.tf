@@ -29,11 +29,6 @@ resource "aws_ecs_service" "application" {
     ignore_changes = [desired_count]
   }
 
-  placement_constraints {
-    type       = var.placement_constraint_type
-    expression = var.placement_constraint_expression
-  }
-
   depends_on = [aws_iam_role.ecs_task_execution]
 
   tags = var.tags

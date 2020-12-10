@@ -61,7 +61,7 @@ variable "memory" {
 
 variable "memory_limit" {
   description = "MEM hard limit for the task"
-  default     = 0
+  default     = null
 }
 
 variable "cluster_name" {
@@ -228,7 +228,7 @@ variable "nginx_container_memory_reservation" {
 }
 
 variable "nginx_container_memory" {
-  default = 0
+  default = null
   type    = number
 }
 

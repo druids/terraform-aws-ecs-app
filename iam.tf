@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "ecs_task_execution" {
 }
 
 resource "aws_iam_role" "ecs_task_execution" {
-  name               = "${local.name_underscore}_ecs_task_execution_role"
+  name               = substr("${local.name_underscore}_ecs_task_execution_role", 0, min(64, length("${local.name_underscore}_ecs_task_execution_role")))
   assume_role_policy = data.aws_iam_policy_document.ecs_task_execution.json
   tags               = local.tags
 }

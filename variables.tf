@@ -14,8 +14,9 @@ variable "name" {
   description = "name of this specific service"
 }
 
-variable "url" {
+variable "alb_url" {
   description = "url for the alb listener"
+  default     = null
 }
 
 variable "vpc_id" {
@@ -24,6 +25,7 @@ variable "vpc_id" {
 
 variable "alb_arn" {
   description = "application load balancer under which target group and services will be registered"
+  default     = null
 }
 
 variable "private_subnet_ids" {
@@ -59,15 +61,16 @@ variable "memory" {
 
 variable "memory_limit" {
   description = "MEM hard limit for the task"
-  default     = 0
+  default     = null
 }
 
 variable "cluster_name" {
   description = "ecs cluster name where the services will be registered"
 }
 
-variable "priority" {
+variable "alb_priority" {
   description = "listener rule priority - must be unique to each ecs-app (module)"
+  default     = null
 }
 
 variable "image" {
@@ -163,4 +166,78 @@ variable "placement_constraint_type" {
 
 variable "placement_constraint_expression" {
   default = "agentConnected==true"
+}
+
+variable "create_alb_resources" {
+  default     = true
+  description = "Enable creation of ALB resources (default enabled)"
+  type        = bool
+}
+
+variable "container_healthcheck_command" {
+  default = ["CMD-SHELL", "echo"]
+  type    = list
+}
+
+variable "container_healthcheck_retries" {
+  default = 5
+  type    = number
+}
+
+variable "container_healthcheck_start_period" {
+  default = 60
+  type    = number
+}
+
+variable "container_healthcheck_interval" {
+  default = 30
+  type    = number
+}
+
+variable "container_healthcheck_timeout" {
+  default = 5
+  type    = number
+}
+
+variable "create_nginx" {
+  default     = true
+  description = "Enable creation if Nginx proxy ALB → Nginx → App (default true, requires ALB)"
+  type        = bool
+}
+
+variable "nginx_container_name" {
+  default     = "nginx_proxy"
+  description = "Container name for Nginx proxy"
+  type        = string
+}
+
+variable "nginx_container_image" {
+  default     = "nginx:latest"
+  description = "Container image to be used for Nginx task"
+  type        = string
+}
+
+variable "nginx_container_cpu" {
+  default = 64
+  type    = number
+}
+
+variable "nginx_container_memory_reservation" {
+  default = 64
+  type    = number
+}
+
+variable "nginx_container_memory" {
+  default = null
+  type    = number
+}
+
+variable "nginx_links" {
+  default = null
+  type    = list
+}
+
+variable "nginx_volume_name" {
+  default = "nginx_config"
+  type    = string
 }

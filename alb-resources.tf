@@ -47,3 +47,7 @@ resource "aws_lb_listener_rule" "application" {
 
   depends_on = [aws_lb_target_group.application]
 }
+
+output "lb_target_group_arn" {
+  value = var.create_alb_resources ? aws_lb_target_group.application[0].arn : null
+}

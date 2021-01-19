@@ -30,7 +30,7 @@ variable "alb_arn" {
 
 variable "private_subnet_ids" {
   description = "list of private subnets where to provision services"
-  type        = list
+  type        = list(any)
 }
 
 variable "port" {
@@ -41,12 +41,12 @@ variable "port" {
 
 variable "environment" {
   default = []
-  type    = list
+  type    = list(any)
 }
 
 variable "secrets" {
   default = []
-  type    = list
+  type    = list(any)
 }
 
 variable "cpu" {
@@ -97,7 +97,13 @@ variable "max_healthy" {
 
 variable "policy" {
   description = "IAM Policy heredoc to use with task"
-  default     = ""
+  default     = null
+  type        = string
+}
+
+variable "use_custom_policy" {
+  default = false
+  type    = bool
 }
 
 variable "max_capacity" {
@@ -176,7 +182,7 @@ variable "create_alb_resources" {
 
 variable "container_healthcheck_command" {
   default = ["CMD-SHELL", "echo"]
-  type    = list
+  type    = list(any)
 }
 
 variable "container_healthcheck_retries" {
@@ -234,7 +240,7 @@ variable "nginx_container_memory" {
 
 variable "nginx_links" {
   default = null
-  type    = list
+  type    = list(any)
 }
 
 variable "nginx_volume_name" {

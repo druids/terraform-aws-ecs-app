@@ -74,7 +74,7 @@ resource "aws_iam_role_policy_attachment" "application_logs" {
 
 // custom policy
 resource "aws_iam_policy" "service_policy" {
-  count = var.policy == "" ? 0 : 1
+  count = var.use_custom_policy ? 1 : 0
 
   name        = "${local.name}-${var.name}"
   path        = "/"
@@ -83,7 +83,7 @@ resource "aws_iam_policy" "service_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "service_policy" {
-  count = var.policy == "" ? 0 : 1
+  count = var.use_custom_policy ? 1 : 0
 
   role       = aws_iam_role.ecs_task_execution.id
   policy_arn = aws_iam_policy.service_policy[0].arn

@@ -11,14 +11,14 @@ module "container_definition_noalb" { // Without ALB
   container_memory_reservation = var.memory
   container_memory             = var.memory_limit
 
-  port_mappings = [
+  port_mappings = var.port ? [
     {
       containerPort = var.port
-      hostPort      = 0
+      hostPort      = contains(var.requires_compatibilities, "FARGATE") ? var.port : 0
       protocol      = "tcp"
     },
-  ]
-
+  ] : []
+ 
   log_configuration = {
     logDriver = "awslogs"
     options = {

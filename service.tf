@@ -8,7 +8,7 @@ resource "aws_ecs_service" "application" {
   cluster = data.aws_ecs_cluster.ecs.arn
 
   task_definition                    = "${aws_ecs_task_definition.application.family}:${max(aws_ecs_task_definition.application.revision, data.aws_ecs_task_definition.application.revision)}"
-  launch_type                        = "EC2"
+  launch_type                        = var.requires_compatibilities[0]
   desired_count                      = var.min_capacity
   deployment_maximum_percent         = var.max_healthy
   deployment_minimum_healthy_percent = var.min_healthy

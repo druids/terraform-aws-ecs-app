@@ -11,7 +11,7 @@ module "container_definition_noalb" { // Without ALB
   container_memory_reservation = var.memory
   container_memory             = var.memory_limit
 
-  port_mappings = var.port ? [
+  port_mappings = var.port != null ? [
     {
       containerPort = var.port
       hostPort      = contains(var.requires_compatibilities, "FARGATE") ? var.port : 0
@@ -54,10 +54,10 @@ module "container_definition_alb" { // With ALB
   container_memory_reservation = var.memory
   container_memory             = var.memory_limit
 
-  port_mappings = var.create_nginx ? [] : [
+  port_mappings = var.create_nginx || var.port == null ? [] : [
     {
       containerPort = var.port
-      hostPort      = 0
+      hostPort      = contains(var.requires_compatibilities, "FARGATE") ? var.port : 0
       protocol      = "tcp"
     },
   ]
@@ -95,13 +95,13 @@ module "container_definition_nginx" { // Nginx task
   container_memory_reservation = var.nginx_container_memory_reservation
   container_memory             = var.nginx_container_memory
 
-  port_mappings = [
+  port_mappings = var.port != null ? [
     {
       containerPort = var.port
-      hostPort      = 0
+      hostPort      = contains(var.requires_compatibilities, "FARGATE") ? var.port : 0
       protocol      = "tcp"
     },
-  ]
+  ] : []
 
   volumes_from = [
     {

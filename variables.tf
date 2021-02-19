@@ -35,7 +35,7 @@ variable "private_subnet_ids" {
 
 variable "port" {
   description = "port on which the service listens"
-  default     = 80
+  default     = null
   type        = number
 }
 

@@ -9,7 +9,8 @@ resource "aws_ecs_task_definition" "application" {
 
   container_definitions = var.create_alb_resources ? (var.create_nginx ? "[${module.container_definition_alb[0].json_map_encoded}, ${module.container_definition_nginx[0].json_map_encoded}]" : "[${module.container_definition_alb[0].json_map_encoded}]") : "[${module.container_definition_noalb[0].json_map_encoded}]"
 
-  cpu = contains(var.requires_compatibilities, "FARGATE") ? var.cpu : null
+  cpu    = contains(var.requires_compatibilities, "FARGATE") ? var.cpu : null
+  memory = contains(var.requires_compatibilities, "FARGATE") ? var.memory_limit : null
 
   dynamic "volume" {
     for_each = var.create_alb_resources && var.create_nginx ? [1] : []

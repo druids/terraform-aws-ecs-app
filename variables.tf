@@ -247,3 +247,13 @@ variable "nginx_volume_name" {
   default = "nginx_config"
   type    = string
 }
+
+variable "requires_compatibilities" {
+  default = ["EC2"]
+  type    = list(string)
+}
+
+variable "network_mode" {
+  default = "bridge"
+  type    = string
+}

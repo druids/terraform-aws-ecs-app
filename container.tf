@@ -18,7 +18,7 @@ module "container_definition_noalb" { // Without ALB
       protocol      = "tcp"
     },
   ] : []
- 
+
   log_configuration = {
     logDriver = "awslogs"
     options = {

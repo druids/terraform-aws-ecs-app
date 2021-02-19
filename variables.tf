@@ -257,3 +257,8 @@ variable "network_mode" {
   default = "bridge"
   type    = string
 }
+
+variable "assign_public_ip" {
+  default = false
+  type    = bool
+}

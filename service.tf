@@ -25,6 +25,17 @@ resource "aws_ecs_service" "application" {
     }
   }
 
+  dynamic "network_configuration" {
+    for_each = contains(var.requires_compatibilities, "FARGATE") ? [1] : []
+
+    content {
+      subnets          = var.private_subnet_ids
+      security_groups  = [aws_security_group.application.id]
+      assign_public_ip = var.assign_public_ip
+    }
+  }
+
+
   lifecycle {
     ignore_changes = [desired_count]
   }

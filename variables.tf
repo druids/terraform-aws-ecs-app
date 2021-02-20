@@ -262,3 +262,8 @@ variable "assign_public_ip" {
   default = false
   type    = bool
 }
+
+variable "image_scanning" {
+  default = false
+  type    = bool
+}

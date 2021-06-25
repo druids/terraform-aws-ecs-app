@@ -3,12 +3,13 @@ locals {
   name_underscore = "${var.project}_${var.app}_${var.stage}_${var.name}"
 
   tags = merge(
-    map(
-      "Name", local.name,
-      "Project", var.project,
-      "Stage", var.stage,
-      "App", var.app,
-    ), var.tags
+    tomap({
+      "Name"    = local.name
+      "Project" = var.project
+      "Stage"   = var.stage
+      "App"     = var.app
+    }),
+    var.tags,
   )
 }
 

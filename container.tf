@@ -2,7 +2,7 @@ module "container_definition_noalb" { // Without ALB
   count = var.create_alb_resources ? 0 : 1
 
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "v0.45.2"
+  version = "v0.57.0"
 
   container_name  = var.name
   container_image = var.image == "" ? aws_ecr_repository.application[0].repository_url : var.image
@@ -45,7 +45,7 @@ module "container_definition_alb" { // With ALB
   count = var.create_alb_resources ? 1 : 0
 
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "v0.45.2"
+  version = "v0.57.0"
 
   container_name  = var.name
   container_image = var.image == "" ? aws_ecr_repository.application[0].repository_url : var.image
@@ -66,6 +66,7 @@ module "container_definition_alb" { // With ALB
     {
       containerPath = "/etc/nginx/conf.d/"
       sourceVolume  = "nginx_config"
+      readOnly      = true
     },
   ] : []
 
@@ -86,7 +87,7 @@ module "container_definition_nginx" { // Nginx task
   count = var.create_alb_resources && var.create_nginx ? 1 : 0
 
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "v0.45.2"
+  version = "v0.57.0"
 
   container_name  = var.nginx_container_name
   container_image = var.nginx_container_image

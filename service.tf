@@ -1,13 +1,8 @@
-data "aws_ecs_task_definition" "application" {
-  task_definition = aws_ecs_task_definition.application.family
-  depends_on      = [aws_ecs_task_definition.application]
-}
-
 resource "aws_ecs_service" "application" {
   name    = var.name
   cluster = data.aws_ecs_cluster.ecs.arn
 
-  task_definition                    = "${aws_ecs_task_definition.application.family}:${max(aws_ecs_task_definition.application.revision, data.aws_ecs_task_definition.application.revision)}"
+  task_definition                    = aws_ecs_task_definition.application.arn
   launch_type                        = var.requires_compatibilities[0]
   desired_count                      = var.min_capacity
   deployment_maximum_percent         = var.max_healthy
@@ -35,9 +30,11 @@ resource "aws_ecs_service" "application" {
     }
   }
 
-
   lifecycle {
-    ignore_changes = [desired_count]
+    ignore_changes = [
+      desired_count,
+      task_definition,
+    ]
   }
 
   depends_on = [aws_iam_role.ecs_task_execution]

@@ -19,8 +19,11 @@ resource "aws_ecs_task_definition" "application" {
       name = var.nginx_volume_name
 
       docker_volume_configuration {
-        scope  = "task"
-        driver = "local"
+        scope         = "task"
+        driver        = "local"
+        driver_opts   = null
+        labels        = null
+        autoprovision = false
       }
     }
   }

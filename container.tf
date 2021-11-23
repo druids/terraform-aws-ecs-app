@@ -28,7 +28,6 @@ module "container_definition_noalb" { // Without ALB
     }
   }
 
-
   healthcheck = {
     command     = var.container_healthcheck_command
     interval    = var.container_healthcheck_interval

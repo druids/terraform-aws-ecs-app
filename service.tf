@@ -15,6 +15,8 @@ resource "aws_ecs_service" "application" {
   health_check_grace_period_seconds  = var.healthcheck_grace
   scheduling_strategy                = var.scheduling_strategy
 
+  propagate_tags = "SERVICE"
+
   dynamic "load_balancer" {
     for_each = var.create_alb_resources ? [1] : []
 

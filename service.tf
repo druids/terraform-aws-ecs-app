@@ -37,7 +37,6 @@ resource "aws_ecs_service" "application" {
     }
   }
 
-
   lifecycle {
     ignore_changes = [desired_count]
   }

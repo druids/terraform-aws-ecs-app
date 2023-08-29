@@ -6,6 +6,14 @@ resource "aws_appautoscaling_target" "ecs_target" {
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
   depends_on         = [aws_ecs_service.application]
+
+  lifecycle {
+    replace_triggered_by = [
+      # Replace `aws_appautoscaling_target` each time this instance of
+      # the `aws_ecs_service` is replaced.
+      aws_ecs_service.application.id
+    ]
+  }
 }
 
 // metric used for auto scale

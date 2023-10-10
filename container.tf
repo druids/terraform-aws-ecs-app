@@ -117,7 +117,7 @@ module "container_definition_nginx" { // Nginx task
     logDriver = "awslogs"
     options = {
       awslogs-region        = data.aws_region.current.name
-      awslogs-group         = aws_cloudwatch_log_group.application_logs.name
+      awslogs-group         = aws_cloudwatch_log_group.nginx_logs[0].name
       awslogs-stream-prefix = "ecs"
     }
   }

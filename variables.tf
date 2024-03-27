@@ -267,3 +267,33 @@ variable "image_scanning" {
   default = false
   type    = bool
 }
+
+variable "sqs_scaling_enabled" {
+  default = false
+  type    = bool
+}
+
+variable "sqs_scaling_evaluation_periods" {
+  default = 60
+  type    = number
+}
+
+variable "sqs_scaling_metric_name" {
+  default = "ApproximateAgeOfOldestMessage"
+  type    = string
+}
+
+variable "sqs_scaling_period" {
+  default = 120
+  type    = number
+}
+
+variable "sqs_scaling_queue_name" {
+  default = null
+  type    = string
+}
+
+variable "sqs_scaling_threshold" {
+  default = 60
+  type    = number
+}

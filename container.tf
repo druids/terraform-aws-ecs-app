@@ -121,4 +121,7 @@ module "container_definition_nginx" { // Nginx task
       awslogs-stream-prefix = "ecs"
     }
   }
+
+  environment = []
+  secrets     = []
 }

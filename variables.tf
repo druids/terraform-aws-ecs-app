@@ -304,7 +304,7 @@ variable "ecr_untagged_lifetime" {
 }
 
 variable "ecr_tagged_lifetime" {
-  default = 90
+  default = 5
   type = number
 }
 

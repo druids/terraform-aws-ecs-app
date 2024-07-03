@@ -297,3 +297,18 @@ variable "sqs_scaling_threshold" {
   default = 60
   type    = number
 }
+
+variable "ecr_untagged_lifetime" {
+  default = 1
+  type = number
+}
+
+variable "ecr_number_of_newest_tags" {
+  default = 5
+  type = number
+}
+
+variable "ecr_tag_prefix_list" {
+  default = ["!latest"]
+  type = list(string)
+}

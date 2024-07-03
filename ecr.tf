@@ -30,12 +30,12 @@ resource "aws_ecr_lifecycle_policy" "application" {
       },
       {
         rulePriority = 2
-        description  = "Expire tagged images and keep last ${var.ecr_tagged_lifetime}"
+        description  = "Expire tagged images and keep last ${var.number_of_newest_tags}"
         selection = {
           tagStatus     = "tagged"
           tagPrefixList = var.ecr_tag_prefix_list
           countType = "imageCountMoreThan"
-          countNumber   = var.ecr_tagged_lifetime
+          countNumber   = var.number_of_newest_tags
         }
         action = {
           type = "expire"

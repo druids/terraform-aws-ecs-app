@@ -303,7 +303,7 @@ variable "ecr_untagged_lifetime" {
   type = number
 }
 
-variable "ecr_tagged_lifetime" {
+variable "number_of_newest_tags" {
   default = 5
   type = number
 }

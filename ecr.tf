@@ -11,7 +11,7 @@ resource "aws_ecr_repository" "application" {
 
 resource "aws_ecr_lifecycle_policy" "application" {
   count = var.image == "" ? 1 : 0
-  repository = aws_ecr_repository.application.*.name
+  repository = aws_ecr_repository.application[0].name
 
   policy = jsonencode({
     rules = [
@@ -48,5 +48,5 @@ depends_on = [ aws_ecr_repository.application ]
 }
 
 output "ecr_repository" {
-  value = aws_ecr_repository.application.*.repository_url
+  value = aws_ecr_repository.application[0].repository_url
 }

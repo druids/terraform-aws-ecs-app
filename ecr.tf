@@ -10,7 +10,7 @@ resource "aws_ecr_repository" "application" {
 }
 
 resource "aws_ecr_lifecycle_policy" "application" {
-  count = var.image == "" ? 1 : 0
+  count      = var.image == "" ? 1 : 0
   repository = aws_ecr_repository.application[0].name
 
   policy = jsonencode({
@@ -30,12 +30,24 @@ resource "aws_ecr_lifecycle_policy" "application" {
       },
       {
         rulePriority = 2
-        description  = "Expire tagged images and keep last ${var.ecr_number_of_newest_tags}"
+        description  = "Keep important tags safe."
         selection = {
           tagStatus     = "tagged"
           tagPrefixList = var.ecr_tag_prefix_list
-          countType = "imageCountMoreThan"
-          countNumber   = var.ecr_number_of_newest_tags
+          countType     = "imageCountMoreThan"
+          countNumber   = 10000
+        }
+        action = {
+          type = "expire"
+        }
+      },
+      {
+        rulePriority = 3
+        description  = "Expire tagged images and keep last ${var.ecr_number_of_newest_tags}"
+        selection = {
+          tagStatus   = "tagged"
+          countType   = "imageCountMoreThan"
+          countNumber = var.ecr_number_of_newest_tags
         }
         action = {
           type = "expire"
@@ -44,7 +56,7 @@ resource "aws_ecr_lifecycle_policy" "application" {
     ]
   })
 
-depends_on = [ aws_ecr_repository.application ]
+  depends_on = [aws_ecr_repository.application]
 }
 
 output "ecr_repository" {

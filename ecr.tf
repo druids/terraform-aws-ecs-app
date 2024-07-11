@@ -45,7 +45,7 @@ resource "aws_ecr_lifecycle_policy" "application" {
         rulePriority = 3
         description  = "Expire tagged images and keep last ${var.ecr_number_of_newest_tags}"
         selection = {
-          tagStatus   = "tagged"
+          tagStatus   = "any"
           countType   = "imageCountMoreThan"
           countNumber = var.ecr_number_of_newest_tags
         }

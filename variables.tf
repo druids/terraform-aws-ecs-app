@@ -309,6 +309,6 @@ variable "ecr_number_of_newest_tags" {
 }
 
 variable "ecr_tag_prefix_list" {
-  default = ["!latest"]
+  default = ["latest"]
   type = list(string)
 }

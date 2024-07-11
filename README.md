@@ -50,7 +50,7 @@ The service is behind a load balancer which means it is exposed. A HTTP healthch
 | cooldown | n/a | `number` | `60` | no |
 | cpu | CPU reservation for the task | `number` | `256` | no |
 | deregistration\_delay | n/a | `number` | `30` | no |
-| ecr\_tag\_prefix\_list |  n/a | `list` | `["!latest"]` | no |
+| ecr\_tag\_prefix\_list |  n/a | `list` | `["latest"]` | no |
 | ecr_number\_of\_newest_tags |  n/a | `number` | `90` | no |
 | ecr\_untagged\_lifetime |  n/a | `number` | `1` | no |
 | environment | n/a | `list` | `[]` | no |

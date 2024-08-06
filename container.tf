@@ -11,6 +11,8 @@ module "container_definition_noalb" { // Without ALB
   container_memory_reservation = var.memory
   container_memory             = var.memory_limit
 
+  docker_labels = var.ecs_docker_labels
+
   port_mappings = var.port != null ? [
     {
       containerPort = var.port
@@ -54,6 +56,8 @@ module "container_definition_alb" { // With ALB
   container_memory_reservation = var.memory
   container_memory             = var.memory_limit
 
+  docker_labels = var.ecs_docker_labels
+
   port_mappings = var.create_nginx || var.port == null ? [] : [
     {
       containerPort = var.port
@@ -95,6 +99,8 @@ module "container_definition_nginx" { // Nginx task
   container_cpu                = var.nginx_container_cpu
   container_memory_reservation = var.nginx_container_memory_reservation
   container_memory             = var.nginx_container_memory
+
+  docker_labels = var.ecs_docker_labels
 
   port_mappings = var.port != null ? [
     {
